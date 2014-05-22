@@ -11,5 +11,5 @@ package wireworld;
  */
 public interface State {
 
-    public void nextState();
+    public void nextState(Cell wrapper);
 }

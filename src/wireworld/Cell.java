@@ -18,10 +18,14 @@ public class Cell {
     }
 
     public Cell() {
-        state = new Insulator();
+        state = new Conductor();
+    }
+    
+    public void setState(State state) {
+        this.state = state;
     }
     
     public void nextState() {
-        this.state.nextState();
+        state.nextState(this);
     }
 }

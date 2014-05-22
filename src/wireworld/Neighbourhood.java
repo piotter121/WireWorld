@@ -3,17 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package wireworld;
 
 /**
  *
  * @author Piotrek
  */
-public class Head implements State {
-
-    @Override
-    public void nextState(Cell wrapper) {
-        wrapper.setState(new Tail());
-    }
-
+public interface Neighbourhood {
+    public int defineNeighbours(Cell cell);
 }

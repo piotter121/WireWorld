@@ -12,8 +12,8 @@ package wireworld;
 public class Tail implements State {
 
     @Override
-    public void nextState() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void nextState(Cell wrapper) {
+        wrapper.setState(new Conductor());
     }
 
 }
