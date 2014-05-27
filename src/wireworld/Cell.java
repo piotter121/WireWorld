@@ -11,21 +11,39 @@ package wireworld;
  */
 public class Cell {
 
+    private final int i;
+    private final int j;
     private State state;
 
-    public Cell(State state) {
+    public Cell(int i, int j, State state) {
+        this.i = i;
+        this.j = j;
         this.state = state;
     }
 
-    public Cell() {
-        state = new Conductor();
-    }
-    
     public void setState(State state) {
         this.state = state;
     }
-    
+
     public void nextState() {
         state.nextState(this);
+    }
+    
+    public int getWerticalPosition() {
+        return i;
+    }
+    
+    public int getHorizontalPosition() {
+        return j;
+    }
+    
+    public String getState() {
+        return state.getClass().getSimpleName();
+    }
+    
+    @Override
+    public String toString() {
+        return this.getState() + ": " + this.getWerticalPosition() 
+                + " " + this.getHorizontalPosition();
     }
 }
