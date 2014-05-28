@@ -12,7 +12,7 @@ package wireworld;
 class Insulator implements State {
 
     @Override
-    public void nextState(Cell wrapper) {
+    public void nextState(Cell wrapper, int heads) {
     }
 
 }

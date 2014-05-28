@@ -25,8 +25,8 @@ public class Cell {
         this.state = state;
     }
 
-    public void nextState() {
-        state.nextState(this);
+    public void nextState(int heads) {
+        state.nextState(this, heads);
     }
     
     public int getWerticalPosition() {

@@ -12,7 +12,7 @@ package wireworld;
 public class Head implements State {
 
     @Override
-    public void nextState(Cell wrapper) {
+    public void nextState(Cell wrapper, int heads) {
         wrapper.setState(new Tail());
     }
 

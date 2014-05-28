@@ -13,8 +13,9 @@ package wireworld;
 public class Conductor implements State {
     
     @Override
-    public void nextState(Cell wrapper) {
-        wrapper.setState(new Head());
+    public void nextState(Cell wrapper, int heads) {
+        if (heads == 1 || heads == 2)
+            wrapper.setState(new Head());
     }
     
 }
