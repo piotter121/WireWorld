@@ -23,15 +23,33 @@ public class Population {
         board = new Cell[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                board[i][j] = new Cell(i, j, new Conductor());
+                board[i][j] = new Cell(i, j, new Insulator());
             }
         }
     }
 
-    public Population(int m, int n, File in) {
+    public Population(int m, int n, String filePath) throws IOException {
         height = m;
         width = n;
         board = new Cell[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                board[i][j] = new Cell(i, j, new Insulator());
+            }
+        }
+        String[] splited;
+        FileReader fileReader = new FileReader(filePath);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        try {
+            String textLine = bufferedReader.readLine();
+            do {
+                splited = textLine.split(" ");
+                
+                textLine = bufferedReader.readLine();
+            } while (textLine != null);
+        } finally {
+            bufferedReader.close();
+        }
     }
 
     public void setCellState(int i, int j, State state) {
@@ -42,13 +60,35 @@ public class Population {
 
     public Population nextPopulation() {
         int heads;
+        Population next = copy();
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 heads = countHeads(i, j);
-                board[i][j].nextState(heads);
+                next.board[i][j].nextState(heads);
             }
         }
-        return null;
+        return next;
+    }
+
+    public Population copy() {
+        Population copy = new Population(m, n);
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (board[i][j].getState().equals("Empty") == false) {
+                    switch (board[i][j].getState()) {
+                        case "Head":
+                            board[i][j].setState(new Head());
+                            break;
+                        case "Tail":
+                            board[i][j].setState(new Tail());
+                            break;
+                        case "Conductor":
+                            board[i][j].setState(new Conductor());
+                            break;
+                    }
+                }
+            }
+        }
     }
 
     public int getHeight() {
