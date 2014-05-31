@@ -5,6 +5,8 @@
  */
 package wireworld;
 
+import java.awt.Color;
+
 /**
  *
  * @author Piotrek
@@ -13,6 +15,11 @@ class Insulator implements State {
 
     @Override
     public void nextState(Cell wrapper, int heads) {
+    }
+
+    @Override
+    public Color getColor() {
+        return Color.BLACK;
     }
 
 }

@@ -28,27 +28,36 @@ public class Population {
         }
     }
 
-    public Population(int m, int n, String filePath) throws IOException {
-        height = m;
-        width = n;
-        board = new Cell[m][n];
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                board[i][j] = new Cell(i, j, new Insulator());
-            }
-        }
+    public Population(Population toCopy) {
+        this.height = toCopy.height;
+        this.width = toCopy.width;
+        this.board = toCopy.board;
+    }
+
+    public Population(File file) throws IOException {
         String[] splited;
-        FileReader fileReader = new FileReader(filePath);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        FileReader fileReader = null;
+        BufferedReader bufferedReader = null;
+        String textLine = null;
         try {
-            String textLine = bufferedReader.readLine();
+            fileReader = new FileReader(file);
+            bufferedReader = new BufferedReader(fileReader);
+            textLine = bufferedReader.readLine();
+            splited = textLine.split("\\s+");
+            height = Integer.parseInt(splited[0]);
+            width = Integer.parseInt(splited[1]);
             do {
-                splited = textLine.split(" ");
-                
                 textLine = bufferedReader.readLine();
+                splited = textLine.split("\\s+");
+                if (splited.length == 3) {
+
+                }
+
             } while (textLine != null);
         } finally {
-            bufferedReader.close();
+            if (bufferedReader != null) {
+                bufferedReader.close();
+            }
         }
     }
 
@@ -60,7 +69,7 @@ public class Population {
 
     public Population nextPopulation() {
         int heads;
-        Population next = copy();
+        Population next = new Population(this);
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 heads = countHeads(i, j);
@@ -68,27 +77,6 @@ public class Population {
             }
         }
         return next;
-    }
-
-    public Population copy() {
-        Population copy = new Population(m, n);
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                if (board[i][j].getState().equals("Empty") == false) {
-                    switch (board[i][j].getState()) {
-                        case "Head":
-                            board[i][j].setState(new Head());
-                            break;
-                        case "Tail":
-                            board[i][j].setState(new Tail());
-                            break;
-                        case "Conductor":
-                            board[i][j].setState(new Conductor());
-                            break;
-                    }
-                }
-            }
-        }
     }
 
     public int getHeight() {
@@ -115,5 +103,13 @@ public class Population {
             }
         }
         return result;
+    }
+    
+    public void clear() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                board[i][j].setState(new Insulator());
+            }
+        }
     }
 }

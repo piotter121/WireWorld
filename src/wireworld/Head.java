@@ -5,6 +5,8 @@
  */
 package wireworld;
 
+import java.awt.Color;
+
 /**
  *
  * @author Piotrek
@@ -14,6 +16,11 @@ public class Head implements State {
     @Override
     public void nextState(Cell wrapper, int heads) {
         wrapper.setState(new Tail());
+    }
+
+    @Override
+    public Color getColor() {
+        return Color.BLUE;
     }
 
 }

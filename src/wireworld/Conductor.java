@@ -6,6 +6,8 @@
 
 package wireworld;
 
+import java.awt.Color;
+
 /**
  *
  * @author Piotrek
@@ -16,6 +18,11 @@ public class Conductor implements State {
     public void nextState(Cell wrapper, int heads) {
         if (heads == 1 || heads == 2)
             wrapper.setState(new Head());
+    }
+
+    @Override
+    public Color getColor() {
+        return Color.YELLOW;
     }
     
 }

@@ -5,15 +5,16 @@
  */
 package wireworld;
 
-import java.awt.Color;
+import java.awt.*;
 
 /**
  *
  * @author Piotrek
  */
-public interface State {
+public class Program {
 
-    public void nextState(Cell wrapper, int heads);
+    public static void main(String[] args) {
 
-    public Color getColor();
+    }
+
 }

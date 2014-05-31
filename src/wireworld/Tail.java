@@ -5,6 +5,8 @@
  */
 package wireworld;
 
+import java.awt.Color;
+
 /**
  *
  * @author Piotrek
@@ -14,6 +16,11 @@ public class Tail implements State {
     @Override
     public void nextState(Cell wrapper, int heads) {
         wrapper.setState(new Conductor());
+    }
+
+    @Override
+    public Color getColor() {
+        return Color.RED;
     }
 
 }

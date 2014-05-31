@@ -13,21 +13,27 @@ public class WireWorld {
 
     private Population current;
     private Population next;
+    private int n = 1000;
 
     /**
      *
      * @param p first population
-     * @param n how must be defined neighbourhood
      */
-    public WireWorld(Population p) {
+    public void setPopulation(Population p) {
         current = p;
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
+    public void setNumberOfGenerations(int n) {
+        this.n = n;
+    }
+
+    public Population getPopulation() {
+        return current;
+    }
+
+    public void nextStep() {
+        next = current.nextPopulation();
+        Population tmp = 
     }
 
 }

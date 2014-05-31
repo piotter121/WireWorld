@@ -11,5 +11,5 @@ package wireworld;
  * @author Piotrek
  */
 public interface Element {
-    public void setElementOn(int i, int j, Population p);
+    public void setElementOnBoard(int i, int j, Population p);
 }
