@@ -23,7 +23,7 @@ public class Population {
         board = new Cell[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                board[i][j] = new Cell(i, j, new Insulator());
+                board[i][j] = new Cell(new Insulator());
             }
         }
     }
@@ -34,31 +34,73 @@ public class Population {
         this.board = toCopy.board;
     }
 
-    public Population(File file) throws IOException {
+    public Cell getCell(int i, int j) {
+        if (((i >= 0 && i < height) && j >= 0) && j < width) {
+            return board[i][j];
+        } else {
+            return new Cell();
+        }
+    }
+
+    public Population readFromFile(File file) throws IOException {
+        Population p = null;
+        BufferedReader reader = null;
+        String line = null;
         String[] splited;
-        FileReader fileReader = null;
-        BufferedReader bufferedReader = null;
-        String textLine = null;
         try {
-            fileReader = new FileReader(file);
-            bufferedReader = new BufferedReader(fileReader);
-            textLine = bufferedReader.readLine();
-            splited = textLine.split("\\s+");
-            height = Integer.parseInt(splited[0]);
-            width = Integer.parseInt(splited[1]);
-            do {
-                textLine = bufferedReader.readLine();
-                splited = textLine.split("\\s+");
-                if (splited.length == 3) {
+            reader = new BufferedReader(new FileReader(file));
+            try {
+                line = reader.readLine();
+                splited = line.split("\\s+");
+                try {
+                    p = new Population(Integer.parseInt(splited[0]),
+                            Integer.parseInt(splited[1]));
+                } catch (ArrayIndexOutOfBoundsException a) {
+                    System.err.println("Zbyt malo danych w lini: " + line);
+                    p = new Population(60, 60);
+                } catch (NumberFormatException n) {
+                    System.err.println("Podane dane w lini " + line
+                            + "nie sa liczbami");
+                    p = new Population(60, 60);
+                }
+                while ((line = reader.readLine()) != null) {
+                    splited = line.split("\\s+");
+                    switch (splited[0]) {
+                        case "Conductor":
+                            p.setCellState(Integer.parseInt(splited[1]),
+                                    Integer.parseInt(splited[2]), new Conductor());
+                            break;
+                        case "Tail":
+                            p.setCellState(Integer.parseInt(splited[1]),
+                                    Integer.parseInt(splited[2]), new Tail());
+                            break;
+                        case "Head":
+                            p.setCellState(Integer.parseInt(splited[1]),
+                                    Integer.parseInt(splited[2]), new Tail());
+                            break;
+                        case "Diode":
+                            p.setElementOnBoard(Integer.parseInt(splited[1]),
+                                    Integer.parseInt(splited[2]), new Diode());
+                            break;
+                    }
 
                 }
-
-            } while (textLine != null);
+            } catch (ArrayIndexOutOfBoundsException i) {
+                System.err.println("Zignorowana linia: " + line);
+                System.err.println("Zbyt malo danych");
+            } catch (NumberFormatException n) {
+                System.err.println("Zignorowana linia: " + line);
+                System.err.println("Przynajmniej jedna z podanych liczb nie jest "
+                        + "liczba calkowita");
+            }
+        } catch (IOException i) {
+            System.err.println(i.getMessage());
         } finally {
-            if (bufferedReader != null) {
-                bufferedReader.close();
+            if (reader != null) {
+                reader.close();
             }
         }
+        return p;
     }
 
     public void setCellState(int i, int j, State state) {
@@ -104,12 +146,16 @@ public class Population {
         }
         return result;
     }
-    
+
     public void clear() {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 board[i][j].setState(new Insulator());
             }
         }
+    }
+
+    public void setElementOnBoard(int i, int j, Element elem) {
+        elem.setElementOnBoard(i, j, this);
     }
 }

@@ -15,10 +15,6 @@ public class WireWorld {
     private Population next;
     private int n = 1000;
 
-    /**
-     *
-     * @param p first population
-     */
     public void setPopulation(Population p) {
         current = p;
     }
@@ -31,9 +27,17 @@ public class WireWorld {
         return current;
     }
 
+    public int getNumberOfGenerations() {
+        return n;
+    }
+
     public void nextStep() {
-        next = current.nextPopulation();
-        Population tmp = 
+        if (n-- > 0) {
+            next = current.nextPopulation();
+            Population tmp = current;
+            current = next;
+            next = tmp;
+        }
     }
 
 }

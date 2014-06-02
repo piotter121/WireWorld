@@ -5,19 +5,21 @@
  */
 package wireworld;
 
+import java.awt.Color;
+
 /**
  *
  * @author Piotrek
  */
-public class Cell {
+public class Cell implements Element {
 
-    private final int i;
-    private final int j;
     private State state;
+    
+    public Cell() {
+        state = new Insulator();
+    }
 
-    public Cell(int i, int j, State state) {
-        this.i = i;
-        this.j = j;
+    public Cell(State state) {
         this.state = state;
     }
 
@@ -28,22 +30,22 @@ public class Cell {
     public void nextState(int heads) {
         state.nextState(this, heads);
     }
-    
-    public int getWerticalPosition() {
-        return i;
-    }
-    
-    public int getHorizontalPosition() {
-        return j;
-    }
-    
+
     public String getState() {
         return state.getClass().getSimpleName();
+    }
+
+    public Color getColor() {
+        return state.getColor();
     }
     
     @Override
     public String toString() {
-        return this.getState() + ": " + this.getWerticalPosition() 
-                + " " + this.getHorizontalPosition();
+        return this.getState();
+    }
+
+    @Override
+    public void setElementOnBoard(int i, int j, Population p) {
+        p.setCellState(i, j, state);
     }
 }
