@@ -5,14 +5,17 @@
  */
 package wireworld;
 
+import java.io.File;
+import java.io.IOException;
+
 /**
  *
  * @author Piotrek
  */
 public class WireWorld {
 
-    private Population current;
-    private Population next;
+    private Population current = new Population(60, 60);
+    private Population next = null;
     private int n = 1000;
 
     public void setPopulation(Population p) {
@@ -32,12 +35,28 @@ public class WireWorld {
     }
 
     public void nextStep() {
-        if (n-- > 0) {
+        if (n > 0) {
             next = current.nextPopulation();
             Population tmp = current;
             current = next;
             next = tmp;
+            n--;
+        }
+    }
+    
+    public void start() {
+        while (n > 0) {
+            nextStep();
+            //System.out.println(current);
         }
     }
 
+    public static void main(String[] args) throws IOException {
+        File file = new File(args[0]);
+        WireWorld game = new WireWorld();
+        game.setPopulation(InputOutput.readFromFile(file));
+        game.setNumberOfGenerations(4);
+        System.out.println(game.getPopulation());
+        game.start();
+    }    
 }

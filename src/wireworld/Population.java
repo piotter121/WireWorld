@@ -5,8 +5,6 @@
  */
 package wireworld;
 
-import java.io.*;
-
 /**
  *
  * @author Piotrek
@@ -28,10 +26,14 @@ public class Population {
         }
     }
 
-    public Population(Population toCopy) {
-        this.height = toCopy.height;
-        this.width = toCopy.width;
-        this.board = toCopy.board;
+    public Population copy() {
+        Population toCopy = new Population(this.height, this.width);
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                toCopy.setElementOnBoard(i, j, ElementFactory.buildElement(this.getCell(i, j).getState()));
+            }
+        }
+        return toCopy;
     }
 
     public Cell getCell(int i, int j) {
@@ -42,67 +44,6 @@ public class Population {
         }
     }
 
-    public Population readFromFile(File file) throws IOException {
-        Population p = null;
-        BufferedReader reader = null;
-        String line = null;
-        String[] splited;
-        try {
-            reader = new BufferedReader(new FileReader(file));
-            try {
-                line = reader.readLine();
-                splited = line.split("\\s+");
-                try {
-                    p = new Population(Integer.parseInt(splited[0]),
-                            Integer.parseInt(splited[1]));
-                } catch (ArrayIndexOutOfBoundsException a) {
-                    System.err.println("Zbyt malo danych w lini: " + line);
-                    p = new Population(60, 60);
-                } catch (NumberFormatException n) {
-                    System.err.println("Podane dane w lini " + line
-                            + "nie sa liczbami");
-                    p = new Population(60, 60);
-                }
-                while ((line = reader.readLine()) != null) {
-                    splited = line.split("\\s+");
-                    switch (splited[0]) {
-                        case "Conductor":
-                            p.setCellState(Integer.parseInt(splited[1]),
-                                    Integer.parseInt(splited[2]), new Conductor());
-                            break;
-                        case "Tail":
-                            p.setCellState(Integer.parseInt(splited[1]),
-                                    Integer.parseInt(splited[2]), new Tail());
-                            break;
-                        case "Head":
-                            p.setCellState(Integer.parseInt(splited[1]),
-                                    Integer.parseInt(splited[2]), new Tail());
-                            break;
-                        case "Diode":
-                            p.setElementOnBoard(Integer.parseInt(splited[1]),
-                                    Integer.parseInt(splited[2]), new Diode());
-                            break;
-                    }
-
-                }
-            } catch (ArrayIndexOutOfBoundsException i) {
-                System.err.println("Zignorowana linia: " + line);
-                System.err.println("Zbyt malo danych");
-            } catch (NumberFormatException n) {
-                System.err.println("Zignorowana linia: " + line);
-                System.err.println("Przynajmniej jedna z podanych liczb nie jest "
-                        + "liczba calkowita");
-            }
-        } catch (IOException i) {
-            System.err.println(i.getMessage());
-        } finally {
-            if (reader != null) {
-                reader.close();
-            }
-        }
-        return p;
-    }
-
     public void setCellState(int i, int j, State state) {
         if (i < height && i >= 0 && j < width && j >= 0) {
             board[i][j].setState(state);
@@ -111,7 +52,7 @@ public class Population {
 
     public Population nextPopulation() {
         int heads;
-        Population next = new Population(this);
+        Population next = copy();
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 heads = countHeads(i, j);
@@ -129,17 +70,11 @@ public class Population {
         return width;
     }
 
-    private int countHeads(int i, int j) {
+    public int countHeads(int i, int j) {
         int result = 0;
         for (int a = i - 1; a <= i + 1; a++) {
-            if (a < 0 || a >= getHeight()) {
-                continue;
-            }
             for (int b = j - 1; b <= j + 1; b++) {
-                if ((a == i && b == j) || b < 0 || b >= getWidth()) {
-                    continue;
-                }
-                if (board[a][b].getState().equals("Head")) {
+                if ("Head".equals(getCell(a, b).getState())) {
                     result++;
                 }
             }
@@ -157,5 +92,18 @@ public class Population {
 
     public void setElementOnBoard(int i, int j, Element elem) {
         elem.setElementOnBoard(i, j, this);
+    }
+
+    @Override
+    public String toString() {
+        String p = new String();
+        for (int i = 0; i < height; i++) {
+            p += "[ ";
+            for (int j = 0; j < width; j++) {
+                p += board[i][j].getState() + ", ";
+            }
+            p += " ]\n";
+        }
+        return p;
     }
 }
