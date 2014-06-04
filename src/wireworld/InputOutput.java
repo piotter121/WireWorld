@@ -6,9 +6,11 @@
 package wireworld;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Writer;
 
 /**
  *
@@ -57,6 +59,9 @@ public class InputOutput {
             }
         }
         return p;
+    }
+
+    public static void writeToFile(File file) {
     }
 
 }

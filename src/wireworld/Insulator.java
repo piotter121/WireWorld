@@ -14,7 +14,8 @@ import java.awt.Color;
 class Insulator implements State {
 
     @Override
-    public void nextState(Cell wrapper, int heads) {
+    public State nextState(int heads) {
+        return new Insulator();
     }
 
     @Override

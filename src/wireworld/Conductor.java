@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package wireworld;
 
 import java.awt.Color;
@@ -13,16 +12,19 @@ import java.awt.Color;
  * @author Piotrek
  */
 public class Conductor implements State {
-    
+
     @Override
-    public void nextState(Cell wrapper, int heads) {
-        if (heads == 1 || heads == 2)
-            wrapper.setState(new Head());
+    public State nextState(int heads) {
+        if (heads == 1 || heads == 2) {
+            return new Head();
+        } else {
+            return new Conductor();
+        }
     }
 
     @Override
     public Color getColor() {
         return Color.YELLOW;
     }
-    
+
 }

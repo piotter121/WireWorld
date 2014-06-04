@@ -14,8 +14,8 @@ import java.awt.Color;
 public class Tail implements State {
 
     @Override
-    public void nextState(Cell wrapper, int heads) {
-        wrapper.setState(new Conductor());
+    public State nextState(int heads) {
+        return new Conductor();
     }
 
     @Override

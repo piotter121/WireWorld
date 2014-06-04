@@ -28,7 +28,7 @@ public class Cell implements Element {
     }
 
     public void nextState(int heads) {
-        state.nextState(this, heads);
+        state = state.nextState(heads);
     }
 
     public String getState() {

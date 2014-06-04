@@ -13,7 +13,7 @@ import java.awt.Color;
  */
 public interface State {
 
-    public void nextState(Cell wrapper, int heads);
+    public State nextState(int heads);
 
     public Color getColor();
 }

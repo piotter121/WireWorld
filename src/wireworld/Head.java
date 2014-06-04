@@ -14,8 +14,8 @@ import java.awt.Color;
 public class Head implements State {
 
     @Override
-    public void nextState(Cell wrapper, int heads) {
-        wrapper.setState(new Tail());
+    public State nextState(int heads) {
+        return new Tail();
     }
 
     @Override

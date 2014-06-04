@@ -27,15 +27,24 @@ public class GraficBoardPanel extends JPanel
     private Element elem;
     private boolean isClicked;
     private int scale;
+    private int paneSize = 600;
 
     public GraficBoardPanel(Population p) {
         this.p = p;
-        scale = 800 / p.getHeight();
+        scale = paneSize / p.getHeight();
     }
 
+    public int getPaneSize() {
+        return paneSize;
+    }
+    
+    public void setPaneSize(int i) {
+        paneSize = i;
+    }
+    
     public void setPopulation(Population p) {
         this.p = p;
-        scale = 800 / p.getHeight();
+        scale = paneSize / p.getHeight();
     }
 
     public Population getPopulation() {
@@ -62,10 +71,10 @@ public class GraficBoardPanel extends JPanel
 
         g.setColor(Color.darkGray);
         for (int i = 0; i < p.getWidth(); i++) {
-            g.fillRect(i * scale, 0, 1, 800);
+            g.fillRect(i * scale, 0, 1, paneSize);
         }
         for (int i = 0; i < p.getWidth(); i++) {
-            g.fillRect(0, i * scale, 800, 1);
+            g.fillRect(0, i * scale, paneSize, 1);
         }
     }
 

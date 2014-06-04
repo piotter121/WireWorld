@@ -43,20 +43,12 @@ public class WireWorld {
             n--;
         }
     }
-    
+
     public void start() {
         while (n > 0) {
             nextStep();
-            //System.out.println(current);
+            System.out.println(current);
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        File file = new File(args[0]);
-        WireWorld game = new WireWorld();
-        game.setPopulation(InputOutput.readFromFile(file));
-        game.setNumberOfGenerations(4);
-        System.out.println(game.getPopulation());
-        game.start();
-    }    
 }
