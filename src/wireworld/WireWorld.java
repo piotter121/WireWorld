@@ -5,9 +5,6 @@
  */
 package wireworld;
 
-import java.io.File;
-import java.io.IOException;
-
 /**
  *
  * @author Piotrek

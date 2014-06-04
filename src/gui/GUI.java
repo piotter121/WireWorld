@@ -7,6 +7,7 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -19,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import wireworld.InputOutput;
 import wireworld.Population;
 import wireworld.WireWorld;
 
@@ -28,33 +30,34 @@ import wireworld.WireWorld;
  */
 public class GUI extends JFrame implements ActionListener {
 
-    WireWorld game = new WireWorld();
+    public WireWorld game = new WireWorld();
+    public File inOut = null;
 
-    JPanel painter;
+    private JPanel painter;
 
-    JMenuBar menuBar;
-    JMenu fileMenu, helpMenu;
-    JMenuItem openFileMenuItem,
+    private JMenuBar menuBar;
+    private JMenu fileMenu, helpMenu;
+    private JMenuItem openFileMenuItem,
             writeFileMenuItem,
             exitMenuItem,
             helpMenuItem,
             aboutMenuItem;
-    JFileChooser fileChooser;
+    private JFileChooser fileChooser;
 
-    JButton startButton,
+    private JButton startButton,
             nextGenerationButton,
             clearButton,
             stopButton;
-    JLabel counterLabel,
+    private JLabel counterLabel,
             sliderLabel,
             elementsLabel;
-    JTextField counterTextField;
-    ButtonGroup elementBox;
-    JRadioButton diodeRadioButton,
+    private JTextField counterTextField;
+    private ButtonGroup elementBox;
+    private JRadioButton diodeRadioButton,
             conductorRadioButton,
             headRadioButton,
             tailRadioButton;
-    JSlider delaySlider;
+    private JSlider delaySlider;
 
     public GUI() {
         game = new WireWorld();
@@ -79,13 +82,35 @@ public class GUI extends JFrame implements ActionListener {
     private void initUpMenu() {
         menuBar = new JMenuBar();
 
+        fileChooser = new JFileChooser();
         fileMenu = new JMenu("Plik");
         openFileMenuItem = new JMenuItem("Otwórz plik...");
-        openFileMenuItem.addActionListener(this);
+        openFileMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                    inOut = fileChooser.getSelectedFile();
+                    game.setPopulation(InputOutput.readFromFile(inOut));
+                }
+            }
+        });
         writeFileMenuItem = new JMenuItem("Zapisz plik...");
-        writeFileMenuItem.addActionListener(this);
+        writeFileMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                    File save = fileChooser.getSelectedFile();
+                    InputOutput.writeToFile(game.getPopulation(), save);
+                }
+            }
+        });
         exitMenuItem = new JMenuItem("Wyjście");
-        exitMenuItem.addActionListener(this);
+        exitMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
 
         helpMenu = new JMenu("Pomoc");
         helpMenuItem = new JMenuItem("Pomoc");
@@ -165,7 +190,6 @@ public class GUI extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public static void main(String[] args) {
