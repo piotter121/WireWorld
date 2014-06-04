@@ -5,12 +5,12 @@
  */
 package wireworld;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,40 +18,45 @@ import java.io.Writer;
  */
 public class InputOutput {
 
-    public static Population readFromFile(File file) throws IOException {
+    public static Population readFromFile(File file) {
         Population p = null;
-        BufferedReader reader = null;
+        Scanner reader = null;
         String line = null;
         String[] splited;
         try {
-            reader = new BufferedReader(new FileReader(file));
+            reader = new Scanner(file);
+            line = reader.nextLine();
+            splited = line.split("\\s+");
+
             try {
-                line = reader.readLine();
+                p = new Population(Integer.parseInt(splited[0]),
+                        Integer.parseInt(splited[1]));
+            } catch (ArrayIndexOutOfBoundsException a) {
+                System.err.println("Zbyt malo danych w lini: " + line);
+                p = new Population(60, 60);
+            } catch (NumberFormatException n) {
+                System.err.println("Podane dane w lini " + line
+                        + "nie sa liczbami");
+                p = new Population(60, 60);
+            }
+
+            while (reader.hasNext()) {
+                line = reader.nextLine();
                 splited = line.split("\\s+");
                 try {
-                    p = new Population(Integer.parseInt(splited[0]),
-                            Integer.parseInt(splited[1]));
-                } catch (ArrayIndexOutOfBoundsException a) {
-                    System.err.println("Zbyt malo danych w lini: " + line);
-                    p = new Population(60, 60);
-                } catch (NumberFormatException n) {
-                    System.err.println("Podane dane w lini " + line
-                            + "nie sa liczbami");
-                    p = new Population(60, 60);
+                    p.setElementOnBoard(Integer.parseInt(splited[1]) - 1,
+                            Integer.parseInt(splited[2]) - 1,
+                            ElementFactory.buildElement(splited[0]));
+                } catch (NumberFormatException ex) {
+                    System.err.println("Zignorowana linia: " + line
+                            + ";\nPodane argumenty nie sa liczbami");
+                } catch (ArrayIndexOutOfBoundsException ex) {
+                    System.err.println("Zignorowana linia: " + line
+                            + ";\nZbyt malo argumentow");
                 }
-                while ((line = reader.readLine()) != null) {
-                    splited = line.split("\\s+");
-                    p.setElementOnBoard(Integer.parseInt(splited[1]) - 1, Integer.parseInt(splited[2]) - 1, ElementFactory.buildElement(splited[0]));
-                }
-            } catch (ArrayIndexOutOfBoundsException i) {
-                System.err.println("Zignorowana linia: " + line);
-                System.err.println("Zbyt malo danych");
-            } catch (NumberFormatException n) {
-                System.err.println("Zignorowana linia: " + line);
-                System.err.println("Przynajmniej jedna z podanych liczb nie jest "
-                        + "liczba calkowita");
             }
-        } catch (IOException i) {
+
+        } catch (FileNotFoundException i) {
             System.err.println(i.getMessage());
         } finally {
             if (reader != null) {
@@ -61,7 +66,27 @@ public class InputOutput {
         return p;
     }
 
-    public static void writeToFile(File file) {
+    public static void writeToFile(Population p, File file) {
+        PrintWriter buffer = null;
+        try {
+            buffer = new PrintWriter(file);
+            buffer.println(p.getHeight() + " " + p.getWidth() + "\n");
+            for (int i = 0; i < p.getHeight(); i++) {
+                for (int j = 0; j < p.getWidth(); j++) {
+                    if (!p.getCell(i, j).getState().equals("Insulator")) {
+                        buffer.println(p.getCell(i, j).getState() + " " + (i + 1) + " "
+                                + (j + 1) + "\n");
+                    }
+                }
+            }
+        } catch (FileNotFoundException ex) {
+            System.err.println("Plik " + file + " do zapisu nie istnieje!!!");
+            Logger.getLogger(InputOutput.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (buffer != null) {
+                buffer.close();
+            }
+        }
     }
 
 }
