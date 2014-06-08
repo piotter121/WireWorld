@@ -9,8 +9,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -81,7 +79,6 @@ public class InputOutput {
             }
         } catch (FileNotFoundException ex) {
             System.err.println("Plik " + file + " do zapisu nie istnieje!!!");
-            Logger.getLogger(InputOutput.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (buffer != null) {
                 buffer.close();

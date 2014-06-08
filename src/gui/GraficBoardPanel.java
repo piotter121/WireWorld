@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package gui;
 
 import java.awt.Color;
@@ -26,25 +25,27 @@ public class GraficBoardPanel extends JPanel
     private Population p;
     private Element elem;
     private boolean isClicked;
-    private int scale;
-    private int paneSize = 600;
+    private int squareSize;
+    private final int panelHeight = 600;
+    private final int panelWidth = 600;
+    private boolean ifDrawGrid = true;
 
     public GraficBoardPanel(Population p) {
         this.p = p;
-        scale = paneSize / p.getHeight();
+        squareSize = panelHeight / p.getHeight();
     }
 
-    public int getPaneSize() {
-        return paneSize;
+    public int getPanelHeight() {
+        return panelHeight;
     }
-    
-    public void setPaneSize(int i) {
-        paneSize = i;
+
+    public int getPanelWidth() {
+        return panelWidth;
     }
-    
+
     public void setPopulation(Population p) {
         this.p = p;
-        scale = paneSize / p.getHeight();
+        squareSize = panelHeight / p.getHeight();
     }
 
     public Population getPopulation() {
@@ -55,8 +56,16 @@ public class GraficBoardPanel extends JPanel
         elem = element;
     }
 
-    public int getScale() {
-        return scale;
+    public Element getElement() {
+        return elem;
+    }
+
+    public int getSquareSize() {
+        return squareSize;
+    }
+
+    public void setIfDrawGrid(boolean b) {
+        ifDrawGrid = b;
     }
 
     @Override
@@ -65,38 +74,35 @@ public class GraficBoardPanel extends JPanel
         for (int i = 0; i < p.getWidth(); i++) {
             for (int j = 0; j < p.getHeight(); j++) {
                 g.setColor(p.getCell(i, j).getColor());
-                g.fillRect(i * scale, j * scale, scale, scale);
+                g.fillRect(i * squareSize, j * squareSize, squareSize, squareSize);
             }
         }
 
         g.setColor(Color.darkGray);
         for (int i = 0; i < p.getWidth(); i++) {
-            g.fillRect(i * scale, 0, 1, paneSize);
+            g.fillRect(i * squareSize, 0, 1, panelHeight);
         }
         for (int i = 0; i < p.getWidth(); i++) {
-            g.fillRect(0, i * scale, paneSize, 1);
+            g.fillRect(0, i * squareSize, panelHeight, 1);
         }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if ((e.getModifiers() & InputEvent.BUTTON1_MASK) != 0) {
-            isClicked = true;
-        } else if ((e.getModifiers() & InputEvent.BUTTON3_MASK) != 0) {
-            isClicked = false;
-        }
         int x = e.getX();
         int y = e.getY();
-        elem.setElementOnBoard((int) x / scale, (int) y / scale, p);
+        elem.setElementOnBoard((int) x / squareSize, (int) y / squareSize, p);
         repaint();
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
+        isClicked = true;
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        isClicked = false;
     }
 
     @Override
@@ -105,6 +111,7 @@ public class GraficBoardPanel extends JPanel
 
     @Override
     public void mouseExited(MouseEvent e) {
+        isClicked = false;
     }
 
     @Override
@@ -117,7 +124,7 @@ public class GraficBoardPanel extends JPanel
         if (isClicked) {
             int x = e.getX();
             int y = e.getY();
-            elem.setElementOnBoard((int) x / scale, (int) y / scale, p);
+            elem.setElementOnBoard((int) x / squareSize, (int) y / squareSize, p);
         }
     }
 

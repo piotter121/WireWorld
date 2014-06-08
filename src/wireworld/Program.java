@@ -5,7 +5,8 @@
  */
 package wireworld;
 
-import java.awt.*;
+import gui.GUI;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -14,7 +15,13 @@ import java.awt.*;
 public class Program {
 
     public static void main(String[] args) {
-
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                final GUI frame;
+                frame = new GUI();
+            }
+        });
     }
 
 }
