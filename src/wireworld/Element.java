@@ -6,6 +6,8 @@
 
 package wireworld;
 
+import wireworld.Population;
+
 /**
  *
  * @author Piotrek

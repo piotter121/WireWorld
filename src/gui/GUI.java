@@ -5,11 +5,16 @@
  */
 package gui;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,11 +26,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
-import wireworld.Cell;
-import wireworld.Conductor;
-import wireworld.InputOutput;
-import wireworld.Population;
-import wireworld.WireWorld;
+import wireworld.*;
 
 /**
  *
@@ -33,7 +34,8 @@ import wireworld.WireWorld;
  */
 public class GUI extends JFrame implements ActionListener {
 
-    public WireWorld game = new WireWorld();
+    private WireWorld game = new WireWorld();
+    private boolean isStoped = true;
 
     private GraficBoardPanel grid;
 
@@ -43,15 +45,17 @@ public class GUI extends JFrame implements ActionListener {
             saveFileMenuItem,
             exitMenuItem,
             aboutMenuItem;
-    private JFileChooser fileChooser = new JFileChooser();
+    private final JFileChooser fileChooser = new JFileChooser();
 
     private JButton startButton,
             nextGenerationButton,
             clearButton,
-            stopButton;
+            stopButton,
+            defaultSettingsButton;
     private JLabel counterLabel,
             sliderLabel,
-            elementsLabel;
+            elementsLabel,
+            optionsLabel;
     private JTextField counterTextField;
     private ButtonGroup elementBox;
     private JRadioButton diodeRadioButton,
@@ -60,6 +64,7 @@ public class GUI extends JFrame implements ActionListener {
             tailRadioButton,
             insulatorRadioButton;
     private JSlider delaySlider;
+    private JCheckBox checkGrid;
 
     public GUI() {
         game = new WireWorld();
@@ -70,7 +75,7 @@ public class GUI extends JFrame implements ActionListener {
         initRightMenu();
 
         grid = new GraficBoardPanel(game.getPopulation());
-        grid.setBounds(0, 0, 600, 600);
+        grid.setBounds(0, 0, grid.getPanelHeight(), grid.getPanelWidth());
         grid.addMouseListener(grid);
         grid.addMouseMotionListener(grid);
         grid.setElement(new Cell(new Conductor()));
@@ -99,9 +104,11 @@ public class GUI extends JFrame implements ActionListener {
         openFileMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                isStoped = true;
                 if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                     File opened = fileChooser.getSelectedFile();
                     game.setPopulation(InputOutput.readFromFile(opened));
+                    setUpGrid();
                 }
             }
         });
@@ -110,6 +117,7 @@ public class GUI extends JFrame implements ActionListener {
         saveFileMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                isStoped = true;
                 if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
                     File save = fileChooser.getSelectedFile();
                     InputOutput.writeToFile(game.getPopulation(), save);
@@ -150,14 +158,12 @@ public class GUI extends JFrame implements ActionListener {
         startButton.setBounds(620, 0, 80, 30);
         startButton.addActionListener(this);
         startButton.setToolTipText("Naciśnij, aby uruchomić automat");
-        startButton.setVisible(true);
         add(startButton);
 
         stopButton = new JButton("Stop");
         stopButton.setBounds(700, 0, 80, 30);
         stopButton.addActionListener(this);
         stopButton.setToolTipText("Naciśnij, aby zatrzymać automat");
-        stopButton.setVisible(true);
         add(stopButton);
 
         nextGenerationButton = new JButton("Następna generacja");
@@ -165,76 +171,95 @@ public class GUI extends JFrame implements ActionListener {
         nextGenerationButton.addActionListener(this);
         nextGenerationButton.setToolTipText("Naciśnij, aby przejść jeden krok w "
                 + "przód");
-        nextGenerationButton.setVisible(true);
         add(nextGenerationButton);
 
         counterLabel = new JLabel("Ilość generacji");
         counterLabel.setBounds(655, 65, 90, 15);
-        counterLabel.setVisible(true);
         add(counterLabel);
 
         counterTextField = new JTextField();
         counterTextField.setBounds(620, 80, 160, 30);
         counterTextField.setToolTipText("Wpisz tutaj liczbę generacji");
-        counterTextField.setVisible(true);
         counterTextField.setText(String.valueOf(game.getNumberOfGenerations()));
+        counterTextField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                game.setNumberOfGenerations(Integer.parseInt(counterTextField.getText()));
+            }
+        });
         add(counterTextField);
 
         sliderLabel = new JLabel("Opóźnienie w ms");
         sliderLabel.setBounds(645, 125, 100, 15);
-        sliderLabel.setVisible(true);
         add(sliderLabel);
 
         delaySlider = new JSlider(100, 1000, 100);
-        delaySlider.setBounds(610, 140, 190, 60);
+        delaySlider.setBounds(620, 140, 160, 60);
         delaySlider.setMajorTickSpacing(200);
         delaySlider.setMinorTickSpacing(100);
         delaySlider.setPaintTicks(true);
         delaySlider.setPaintLabels(true);
         delaySlider.setToolTipText("Przeciągnij suwak, aby zmienić opóźnienie");
-        delaySlider.setVisible(true);
         add(delaySlider);
 
         clearButton = new JButton("Wyczyść planszę");
         clearButton.setBounds(620, 210, 160, 30);
         clearButton.setToolTipText("Naciśnij, aby wyczyścić planszę z elementów");
-        clearButton.setVisible(true);
         clearButton.addActionListener(this);
         add(clearButton);
 
         elementsLabel = new JLabel("Wybór elementu");
         elementsLabel.setBounds(640, 250, 120, 30);
-        elementsLabel.setVisible(true);
         add(elementsLabel);
 
-        diodeRadioButton = new JRadioButton("Dioda", true);
+        diodeRadioButton = new JRadioButton("Dioda", false);
         diodeRadioButton.setBounds(600, 280, 100, 20);
-        diodeRadioButton.setVisible(true);
-        diodeRadioButton.addActionListener(this);
+        diodeRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                grid.setElement(new Diode());
+            }
+        });
         add(diodeRadioButton);
 
-        conductorRadioButton = new JRadioButton("Przewodnik", false);
+        conductorRadioButton = new JRadioButton("Przewodnik", true);
         conductorRadioButton.setBounds(700, 280, 100, 20);
-        conductorRadioButton.setVisible(true);
-        conductorRadioButton.addActionListener(this);
+        conductorRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                grid.setElement(new Cell(new Conductor()));
+            }
+        });
         add(conductorRadioButton);
 
         headRadioButton = new JRadioButton("Głowa", false);
         headRadioButton.setBounds(600, 300, 100, 20);
-        headRadioButton.setVisible(true);
-        headRadioButton.addActionListener(this);
+        headRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                grid.setElement(new Cell(new Head()));
+            }
+        });
         add(headRadioButton);
 
         tailRadioButton = new JRadioButton("Ogon", false);
         tailRadioButton.setBounds(700, 300, 100, 20);
-        tailRadioButton.setVisible(true);
-        tailRadioButton.addActionListener(this);
+        tailRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                grid.setElement(new Cell(new Tail()));
+            }
+        });
         add(tailRadioButton);
 
         insulatorRadioButton = new JRadioButton("Izolator", false);
         insulatorRadioButton.setBounds(600, 320, 100, 20);
-        insulatorRadioButton.setVisible(true);
-        insulatorRadioButton.addActionListener(this);
+        insulatorRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                grid.setElement(new Cell(new Insulator()));
+            }
+        });
         add(insulatorRadioButton);
 
         elementBox = new ButtonGroup();
@@ -244,10 +269,89 @@ public class GUI extends JFrame implements ActionListener {
         elementBox.add(tailRadioButton);
         elementBox.add(insulatorRadioButton);
 
+        optionsLabel = new JLabel("Opcje");
+        optionsLabel.setBounds(670, 345, 60, 30);
+        add(optionsLabel);
+
+        checkGrid = new JCheckBox("Widoczna siatka", true);
+        checkGrid.setBounds(640, 375, 120, 30);
+        checkGrid.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                grid.setIfDrawGrid(checkGrid.isSelected());
+                grid.repaint();
+            }
+        });
+        add(checkGrid);
+
+        defaultSettingsButton = new JButton("Przywróć domyślne");
+        defaultSettingsButton.setBounds(620, 405, 160, 30);
+        defaultSettingsButton.addActionListener(this);
+        defaultSettingsButton.setToolTipText("Naciśnij, aby zresetować ustawienia");
+        add(defaultSettingsButton);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
+        if (source == startButton) {
+            startClick();
+        } else if (source == stopButton) {
+            stopClick();
+        } else if (source == clearButton) {
+            clearClick();
+        } else if (source == nextGenerationButton) {
+            nextGenerationClick();
+        } else if (source == defaultSettingsButton) {
+            defaultSettingsClick();
+        }
     }
 
+    private void startClick() {
+        isStoped = false;
+        new Thread() {
+            @Override
+            public void run() {
+                game.setNumberOfGenerations(Integer.parseInt(counterTextField.getText()));
+                while (game.getNumberOfGenerations() > 0 && isStoped == false) {
+                    game.nextStep();
+                    counterTextField.setText(String.valueOf(game.getNumberOfGenerations()));
+                    setUpGrid();
+                    try {
+                        Thread.sleep(delaySlider.getValue());
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }.start();
+    }
+
+    private void stopClick() {
+        isStoped = true;
+    }
+
+    private void nextGenerationClick() {
+        game.nextStep();
+        counterTextField.setText(String.valueOf(game.getNumberOfGenerations()));
+        setUpGrid();
+    }
+
+    private void clearClick() {
+        game.getPopulation().clear();
+        setUpGrid();
+    }
+
+    private void defaultSettingsClick() {
+        isStoped = true;
+        game.setNumberOfGenerations(1000);
+        game.setPopulation(new Population(60, 60));
+        counterTextField.setText(String.valueOf(game.getNumberOfGenerations()));
+        setUpGrid();
+    }
+
+    private void setUpGrid() {
+        grid.setPopulation(game.getPopulation());
+        grid.repaint();
+    }
 }

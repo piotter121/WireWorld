@@ -11,7 +11,7 @@ import java.awt.Color;
  *
  * @author Piotrek
  */
-class Insulator implements State {
+public class Insulator implements State {
 
     @Override
     public State nextState(int heads) {

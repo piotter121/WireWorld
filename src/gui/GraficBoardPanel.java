@@ -7,7 +7,6 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -25,14 +24,22 @@ public class GraficBoardPanel extends JPanel
     private Population p;
     private Element elem;
     private boolean isClicked;
-    private int squareSize;
+    private int squareSize = 10;
     private final int panelHeight = 600;
     private final int panelWidth = 600;
     private boolean ifDrawGrid = true;
 
     public GraficBoardPanel(Population p) {
         this.p = p;
-        squareSize = panelHeight / p.getHeight();
+        calculateSquareSize();
+    }
+
+    private void calculateSquareSize() {
+        int panelBiggerDemension
+                = panelHeight > panelWidth ? panelHeight : panelWidth;
+        int populationBiggerDemension
+                = p.getHeight() > p.getWidth() ? p.getHeight() : p.getWidth();
+        squareSize = panelBiggerDemension / populationBiggerDemension;
     }
 
     public int getPanelHeight() {
@@ -45,7 +52,7 @@ public class GraficBoardPanel extends JPanel
 
     public void setPopulation(Population p) {
         this.p = p;
-        squareSize = panelHeight / p.getHeight();
+        calculateSquareSize();
     }
 
     public Population getPopulation() {
@@ -71,19 +78,20 @@ public class GraficBoardPanel extends JPanel
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (int i = 0; i < p.getWidth(); i++) {
-            for (int j = 0; j < p.getHeight(); j++) {
+        for (int i = 0; i < p.getHeight(); i++) {
+            for (int j = 0; j < p.getWidth(); j++) {
                 g.setColor(p.getCell(i, j).getColor());
-                g.fillRect(i * squareSize, j * squareSize, squareSize, squareSize);
+                g.fillRect(j * squareSize, i * squareSize, squareSize, squareSize);
             }
         }
-
-        g.setColor(Color.darkGray);
-        for (int i = 0; i < p.getWidth(); i++) {
-            g.fillRect(i * squareSize, 0, 1, panelHeight);
-        }
-        for (int i = 0; i < p.getWidth(); i++) {
-            g.fillRect(0, i * squareSize, panelHeight, 1);
+        if (ifDrawGrid) {
+            g.setColor(Color.darkGray);
+            for (int i = 0; i < p.getWidth(); i++) {
+                g.fillRect(i * squareSize, 0, 1, p.getHeight() * squareSize);
+            }
+            for (int i = 0; i < p.getHeight(); i++) {
+                g.fillRect(0, i * squareSize, p.getWidth() * squareSize, 1);
+            }
         }
     }
 
@@ -91,7 +99,7 @@ public class GraficBoardPanel extends JPanel
     public void mouseClicked(MouseEvent e) {
         int x = e.getX();
         int y = e.getY();
-        elem.setElementOnBoard((int) x / squareSize, (int) y / squareSize, p);
+        elem.setElementOnBoard((int) y / squareSize, (int) x / squareSize, p);
         repaint();
     }
 
@@ -124,8 +132,9 @@ public class GraficBoardPanel extends JPanel
         if (isClicked) {
             int x = e.getX();
             int y = e.getY();
-            elem.setElementOnBoard((int) x / squareSize, (int) y / squareSize, p);
+            elem.setElementOnBoard((int) y / squareSize, (int) x / squareSize, p);
         }
+        repaint();
     }
 
 }

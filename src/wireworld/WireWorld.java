@@ -11,9 +11,21 @@ package wireworld;
  */
 public class WireWorld {
 
-    private Population current = new Population(60, 60);
-    private Population next = null;
-    private int n = 1000;
+    private Population current;
+    private Population next;
+    private int n;
+
+    public WireWorld() {
+        current = new Population(60, 60);
+        next = null;
+        n = 1000;
+    }
+
+    public WireWorld(Population p) {
+        current = p;
+        next = null;
+        n = 1000;
+    }
 
     public void setPopulation(Population p) {
         current = p;
@@ -44,7 +56,6 @@ public class WireWorld {
     public void start() {
         while (n > 0) {
             nextStep();
-            System.out.println(current);
         }
     }
 
