@@ -80,7 +80,6 @@ public class GUI extends JFrame {
     public GUI() {
         isStoped = true;
         game = new WireWorld();
-        game.setPopulation(new Population(60, 60));
 
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -106,7 +105,7 @@ public class GUI extends JFrame {
     }
 
     private void initFrame() {
-        setSize(800, 600);
+        setSize(800, 651);
         setResizable(false);
         setTitle("WireWorld");
         setLayout(null);
@@ -219,7 +218,7 @@ public class GUI extends JFrame {
         counterTextField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                game.setNumberOfGenerations(Integer.parseInt(counterTextField.getText()));
+                game.setNumberOfGenerations(Long.parseLong(counterTextField.getText()));
             }
         });
         add(counterTextField);
@@ -386,7 +385,7 @@ public class GUI extends JFrame {
             new Thread() {
                 @Override
                 public void run() {
-                    game.setNumberOfGenerations(Integer.parseInt(counterTextField.getText()));
+                    game.setNumberOfGenerations(Long.parseLong(counterTextField.getText()));
                     while (game.getNumberOfGenerations() > 0 && isStoped == false) {
                         game.nextStep();
                         counterTextField.setText(String.valueOf(game.getNumberOfGenerations()));
@@ -420,7 +419,7 @@ public class GUI extends JFrame {
     private void defaultSettingsClick() {
         isStoped = true;
         game.setNumberOfGenerations(1000);
-        game.setPopulation(new Population(60, 60));
+        game.setPopulation(new Population(30, 30));
         counterTextField.setText(String.valueOf(game.getNumberOfGenerations()));
         updateGrid();
     }

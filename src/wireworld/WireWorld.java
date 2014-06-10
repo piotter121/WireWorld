@@ -14,13 +14,13 @@ public class WireWorld {
 
     private Population current;
     private Population next;
-    private int n;
+    private long n;
 
     /**
      * Konstruktor tworzący automat z domyślnymi ustawieniami
      */
     public WireWorld() {
-        current = new Population(60, 60);
+        current = new Population(30, 30);
         next = null;
         n = 1000;
     }
@@ -50,7 +50,7 @@ public class WireWorld {
      *
      * @param n liczba generacji
      */
-    public void setNumberOfGenerations(int n) {
+    public void setNumberOfGenerations(long n) {
         this.n = n;
     }
 
@@ -69,7 +69,7 @@ public class WireWorld {
      *
      * @return liczba pozostałych generacji
      */
-    public int getNumberOfGenerations() {
+    public long getNumberOfGenerations() {
         return n;
     }
 

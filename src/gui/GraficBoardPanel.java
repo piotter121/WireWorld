@@ -41,11 +41,9 @@ public class GraficBoardPanel extends JPanel
     }
 
     private void calculateSquareSize() {
-        int panelBiggerDemension
-                = panelHeight > panelWidth ? panelHeight : panelWidth;
         int populationBiggerDemension
                 = p.getHeight() > p.getWidth() ? p.getHeight() : p.getWidth();
-        squareSize = panelBiggerDemension / populationBiggerDemension;
+        squareSize = panelHeight / populationBiggerDemension;
     }
 
     /**

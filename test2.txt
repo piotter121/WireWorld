@@ -1,0 +1,464 @@
+50 50
+
+Head 8 5
+
+Tail 8 6
+
+Conductor 8 16
+
+Conductor 8 17
+
+Conductor 8 18
+
+Conductor 8 19
+
+Conductor 8 20
+
+Conductor 8 21
+
+Conductor 8 22
+
+Conductor 8 23
+
+Conductor 8 24
+
+Conductor 8 25
+
+Conductor 8 26
+
+Conductor 8 27
+
+Conductor 8 28
+
+Conductor 8 29
+
+Conductor 8 30
+
+Conductor 8 31
+
+Conductor 8 32
+
+Conductor 8 33
+
+Conductor 8 34
+
+Conductor 8 35
+
+Conductor 8 36
+
+Conductor 8 37
+
+Conductor 8 38
+
+Conductor 8 39
+
+Conductor 8 40
+
+Conductor 8 41
+
+Conductor 8 42
+
+Conductor 8 43
+
+Conductor 8 44
+
+Conductor 8 45
+
+Conductor 8 46
+
+Conductor 8 47
+
+Conductor 8 48
+
+Conductor 8 49
+
+Conductor 8 50
+
+Conductor 8 51
+
+Conductor 8 52
+
+Conductor 8 53
+
+Conductor 8 54
+
+Conductor 8 55
+
+Conductor 8 56
+
+Conductor 8 57
+
+Conductor 8 58
+
+Conductor 8 59
+
+Conductor 8 60
+
+Conductor 9 4
+
+Conductor 9 7
+
+Conductor 9 8
+
+Conductor 9 9
+
+Conductor 9 10
+
+Conductor 9 11
+
+Conductor 9 12
+
+Conductor 9 13
+
+Conductor 9 14
+
+Conductor 9 15
+
+Conductor 10 5
+
+Conductor 10 6
+
+Conductor 10 16
+
+Conductor 10 17
+
+Conductor 10 18
+
+Conductor 10 19
+
+Conductor 10 20
+
+Conductor 10 21
+
+Conductor 10 22
+
+Conductor 10 23
+
+Conductor 10 24
+
+Conductor 10 25
+
+Conductor 10 26
+
+Conductor 10 27
+
+Conductor 10 28
+
+Conductor 10 29
+
+Conductor 10 30
+
+Conductor 10 31
+
+Conductor 10 32
+
+Conductor 10 33
+
+Conductor 10 34
+
+Conductor 10 35
+
+Conductor 10 36
+
+Conductor 10 37
+
+Conductor 10 38
+
+Conductor 10 39
+
+Conductor 10 40
+
+Conductor 10 41
+
+Conductor 10 42
+
+Conductor 10 43
+
+Conductor 10 44
+
+Conductor 10 45
+
+Conductor 10 46
+
+Conductor 10 47
+
+Conductor 10 48
+
+Conductor 10 49
+
+Conductor 10 50
+
+Conductor 10 51
+
+Conductor 10 52
+
+Conductor 10 53
+
+Conductor 10 54
+
+Conductor 10 55
+
+Conductor 10 56
+
+Conductor 10 57
+
+Conductor 10 58
+
+Conductor 10 59
+
+Conductor 10 60
+
+Head 16 5
+
+Tail 16 6
+
+Conductor 16 13
+
+Conductor 16 14
+
+Conductor 16 15
+
+Conductor 16 16
+
+Conductor 16 17
+
+Conductor 16 18
+
+Conductor 16 19
+
+Conductor 16 20
+
+Conductor 16 21
+
+Conductor 16 22
+
+Conductor 16 23
+
+Conductor 16 24
+
+Conductor 16 25
+
+Conductor 16 26
+
+Conductor 16 27
+
+Conductor 16 28
+
+Conductor 16 29
+
+Conductor 16 30
+
+Conductor 16 31
+
+Conductor 17 4
+
+Conductor 17 7
+
+Conductor 17 8
+
+Conductor 17 9
+
+Conductor 17 10
+
+Conductor 17 11
+
+Conductor 17 12
+
+Conductor 17 32
+
+Conductor 18 5
+
+Conductor 18 6
+
+Conductor 18 13
+
+Conductor 18 20
+
+Conductor 18 21
+
+Conductor 18 22
+
+Conductor 18 23
+
+Conductor 18 24
+
+Conductor 18 25
+
+Conductor 18 26
+
+Conductor 18 27
+
+Conductor 18 28
+
+Conductor 18 29
+
+Conductor 18 32
+
+Conductor 19 14
+
+Conductor 19 19
+
+Conductor 19 30
+
+Conductor 19 32
+
+Conductor 20 15
+
+Conductor 20 19
+
+Conductor 20 30
+
+Conductor 20 32
+
+Conductor 21 16
+
+Conductor 21 20
+
+Conductor 21 30
+
+Conductor 21 32
+
+Conductor 22 17
+
+Conductor 22 20
+
+Conductor 22 30
+
+Conductor 22 32
+
+Conductor 23 18
+
+Conductor 23 19
+
+Conductor 23 30
+
+Conductor 23 32
+
+Conductor 24 30
+
+Conductor 24 32
+
+Conductor 25 30
+
+Conductor 25 32
+
+Conductor 26 30
+
+Conductor 26 32
+
+Conductor 27 30
+
+Conductor 27 32
+
+Conductor 28 30
+
+Conductor 28 32
+
+Conductor 29 30
+
+Conductor 29 32
+
+Conductor 30 30
+
+Conductor 30 32
+
+Conductor 31 30
+
+Conductor 31 32
+
+Conductor 32 30
+
+Conductor 32 32
+
+Conductor 33 30
+
+Conductor 33 32
+
+Conductor 34 30
+
+Conductor 34 32
+
+Conductor 35 30
+
+Conductor 35 32
+
+Conductor 36 30
+
+Conductor 36 32
+
+Conductor 37 30
+
+Conductor 37 32
+
+Conductor 38 30
+
+Conductor 38 32
+
+Conductor 39 30
+
+Conductor 39 32
+
+Conductor 40 30
+
+Conductor 40 32
+
+Conductor 41 30
+
+Conductor 41 32
+
+Conductor 42 30
+
+Conductor 42 32
+
+Conductor 43 30
+
+Conductor 43 32
+
+Conductor 44 30
+
+Conductor 44 32
+
+Conductor 45 30
+
+Conductor 45 32
+
+Conductor 46 30
+
+Conductor 46 32
+
+Conductor 47 30
+
+Conductor 47 32
+
+Conductor 48 30
+
+Conductor 48 32
+
+Conductor 49 30
+
+Conductor 49 32
+
+Conductor 50 30
+
+Conductor 50 32
+
+Conductor 51 30
+
+Conductor 51 32
+
+Conductor 52 30
+
+Conductor 52 32
+
+Conductor 53 30
+
+Conductor 53 32
+
+Conductor 54 30
+
+Conductor 54 32
+
+Conductor 55 30
+
+Conductor 55 32
+
