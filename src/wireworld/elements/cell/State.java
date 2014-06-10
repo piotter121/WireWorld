@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package wireworld.elements.cell;
 
-package wireworld;
-
-import wireworld.Population;
+import java.awt.Color;
 
 /**
  *
  * @author Piotrek
  */
-public interface Element {
-    public void setElementOnBoard(int i, int j, Population p);
+public interface State {
+
+    public State nextState(int heads);
+
+    public Color getColor();
 }

@@ -5,6 +5,12 @@
  */
 package wireworld;
 
+import wireworld.elements.ElementFactory;
+import wireworld.elements.cell.Insulator;
+import wireworld.elements.cell.State;
+import wireworld.elements.cell.Cell;
+import wireworld.elements.Element;
+
 /**
  *
  * @author Piotrek

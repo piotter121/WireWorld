@@ -5,8 +5,6 @@
  */
 package gui;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -27,15 +25,17 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import wireworld.*;
+import wireworld.elements.*;
+import wireworld.elements.cell.*;
 
 /**
  *
  * @author Piotrek
  */
-public class GUI extends JFrame implements ActionListener {
+public class GUI extends JFrame {
 
     private WireWorld game = new WireWorld();
-    private boolean isStoped = true;
+    private boolean isStoped;
 
     private GraficBoardPanel grid;
 
@@ -62,11 +62,16 @@ public class GUI extends JFrame implements ActionListener {
             conductorRadioButton,
             headRadioButton,
             tailRadioButton,
-            insulatorRadioButton;
+            insulatorRadioButton,
+            nandRadioButton,
+            andNotRadioButton,
+            orRadioButton,
+            flipFlopRadioButton;
     private JSlider delaySlider;
     private JCheckBox checkGrid;
 
     public GUI() {
+        isStoped = true;
         game = new WireWorld();
         game.setPopulation(new Population(60, 60));
 
@@ -108,7 +113,7 @@ public class GUI extends JFrame implements ActionListener {
                 if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                     File opened = fileChooser.getSelectedFile();
                     game.setPopulation(InputOutput.readFromFile(opened));
-                    setUpGrid();
+                    updateGrid();
                 }
             }
         });
@@ -156,19 +161,34 @@ public class GUI extends JFrame implements ActionListener {
     private void initRightMenu() {
         startButton = new JButton("Start");
         startButton.setBounds(620, 0, 80, 30);
-        startButton.addActionListener(this);
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startClick();
+            }
+        });
         startButton.setToolTipText("Naciśnij, aby uruchomić automat");
         add(startButton);
 
         stopButton = new JButton("Stop");
         stopButton.setBounds(700, 0, 80, 30);
-        stopButton.addActionListener(this);
+        stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                stopClick();
+            }
+        });
         stopButton.setToolTipText("Naciśnij, aby zatrzymać automat");
         add(stopButton);
 
         nextGenerationButton = new JButton("Następna generacja");
         nextGenerationButton.setBounds(620, 30, 160, 30);
-        nextGenerationButton.addActionListener(this);
+        nextGenerationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                nextGenerationClick();
+            }
+        });
         nextGenerationButton.setToolTipText("Naciśnij, aby przejść jeden krok w "
                 + "przód");
         add(nextGenerationButton);
@@ -205,7 +225,12 @@ public class GUI extends JFrame implements ActionListener {
         clearButton = new JButton("Wyczyść planszę");
         clearButton.setBounds(620, 210, 160, 30);
         clearButton.setToolTipText("Naciśnij, aby wyczyścić planszę z elementów");
-        clearButton.addActionListener(this);
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clearClick();
+            }
+        });
         add(clearButton);
 
         elementsLabel = new JLabel("Wybór elementu");
@@ -262,19 +287,63 @@ public class GUI extends JFrame implements ActionListener {
         });
         add(insulatorRadioButton);
 
+        nandRadioButton = new JRadioButton("NAND", false);
+        nandRadioButton.setBounds(700, 320, 100, 20);
+        nandRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                grid.setElement(new NAND());
+            }
+        });
+        add(nandRadioButton);
+
+        andNotRadioButton = new JRadioButton("AndNot", false);
+        andNotRadioButton.setBounds(600, 340, 100, 20);
+        andNotRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                grid.setElement(new AndNot());
+            }
+        });
+        add(andNotRadioButton);
+
+        orRadioButton = new JRadioButton("OR", false);
+        orRadioButton.setBounds(700, 340, 100, 20);
+        orRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                grid.setElement(new OR());
+            }
+        });
+        add(orRadioButton);
+
+        flipFlopRadioButton = new JRadioButton("FlipFlop", false);
+        flipFlopRadioButton.setBounds(600, 360, 100, 20);
+        flipFlopRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                grid.setElement(new FlipFlop());
+            }
+        });
+        add(flipFlopRadioButton);
+
         elementBox = new ButtonGroup();
         elementBox.add(diodeRadioButton);
         elementBox.add(conductorRadioButton);
         elementBox.add(headRadioButton);
         elementBox.add(tailRadioButton);
         elementBox.add(insulatorRadioButton);
+        elementBox.add(nandRadioButton);
+        elementBox.add(andNotRadioButton);
+        elementBox.add(orRadioButton);
+        elementBox.add(flipFlopRadioButton);
 
         optionsLabel = new JLabel("Opcje");
-        optionsLabel.setBounds(670, 345, 60, 30);
+        optionsLabel.setBounds(670, 405, 60, 30);
         add(optionsLabel);
 
         checkGrid = new JCheckBox("Widoczna siatka", true);
-        checkGrid.setBounds(640, 375, 120, 30);
+        checkGrid.setBounds(640, 435, 120, 30);
         checkGrid.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -285,46 +354,37 @@ public class GUI extends JFrame implements ActionListener {
         add(checkGrid);
 
         defaultSettingsButton = new JButton("Przywróć domyślne");
-        defaultSettingsButton.setBounds(620, 405, 160, 30);
-        defaultSettingsButton.addActionListener(this);
+        defaultSettingsButton.setBounds(620, 465, 160, 30);
+        defaultSettingsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                defaultSettingsClick();
+            }
+        });
         defaultSettingsButton.setToolTipText("Naciśnij, aby zresetować ustawienia");
         add(defaultSettingsButton);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        Object source = e.getSource();
-        if (source == startButton) {
-            startClick();
-        } else if (source == stopButton) {
-            stopClick();
-        } else if (source == clearButton) {
-            clearClick();
-        } else if (source == nextGenerationButton) {
-            nextGenerationClick();
-        } else if (source == defaultSettingsButton) {
-            defaultSettingsClick();
-        }
-    }
-
     private void startClick() {
-        isStoped = false;
-        new Thread() {
-            @Override
-            public void run() {
-                game.setNumberOfGenerations(Integer.parseInt(counterTextField.getText()));
-                while (game.getNumberOfGenerations() > 0 && isStoped == false) {
-                    game.nextStep();
-                    counterTextField.setText(String.valueOf(game.getNumberOfGenerations()));
-                    setUpGrid();
-                    try {
-                        Thread.sleep(delaySlider.getValue());
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        if (isStoped == true) {
+            isStoped = false;
+            new Thread() {
+                @Override
+                public void run() {
+                    game.setNumberOfGenerations(Integer.parseInt(counterTextField.getText()));
+                    while (game.getNumberOfGenerations() > 0 && isStoped == false) {
+                        game.nextStep();
+                        counterTextField.setText(String.valueOf(game.getNumberOfGenerations()));
+                        updateGrid();
+                        try {
+                            Thread.sleep(delaySlider.getValue());
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 }
-            }
-        }.start();
+            }.start();
+        }
     }
 
     private void stopClick() {
@@ -334,12 +394,12 @@ public class GUI extends JFrame implements ActionListener {
     private void nextGenerationClick() {
         game.nextStep();
         counterTextField.setText(String.valueOf(game.getNumberOfGenerations()));
-        setUpGrid();
+        updateGrid();
     }
 
     private void clearClick() {
         game.getPopulation().clear();
-        setUpGrid();
+        updateGrid();
     }
 
     private void defaultSettingsClick() {
@@ -347,10 +407,10 @@ public class GUI extends JFrame implements ActionListener {
         game.setNumberOfGenerations(1000);
         game.setPopulation(new Population(60, 60));
         counterTextField.setText(String.valueOf(game.getNumberOfGenerations()));
-        setUpGrid();
+        updateGrid();
     }
 
-    private void setUpGrid() {
+    private void updateGrid() {
         grid.setPopulation(game.getPopulation());
         grid.repaint();
     }

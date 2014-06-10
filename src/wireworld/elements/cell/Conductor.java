@@ -3,24 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wireworld;
+package wireworld.elements.cell;
 
+import wireworld.elements.cell.Head;
+import wireworld.elements.cell.State;
 import java.awt.Color;
 
 /**
  *
  * @author Piotrek
  */
-public class Insulator implements State {
+public class Conductor implements State {
 
     @Override
     public State nextState(int heads) {
-        return new Insulator();
+        if (heads == 1 || heads == 2) {
+            return new Head();
+        } else {
+            return new Conductor();
+        }
     }
 
     @Override
     public Color getColor() {
-        return Color.BLACK;
+        return Color.YELLOW;
     }
 
 }

@@ -5,6 +5,7 @@
  */
 package wireworld;
 
+import wireworld.elements.ElementFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;

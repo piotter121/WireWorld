@@ -3,9 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wireworld;
+package wireworld.elements.cell;
 
+import wireworld.elements.Element;
 import java.awt.Color;
+import wireworld.Population;
+import wireworld.elements.Element;
 
 /**
  *
