@@ -82,6 +82,14 @@ public class GUI extends JFrame {
         game = new WireWorld();
         game.setPopulation(new Population(60, 60));
 
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (ClassNotFoundException | InstantiationException |
+                IllegalAccessException | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+        SwingUtilities.updateComponentTreeUI(this);
+
         initFrame();
         initUpMenu();
         initRightMenu();
@@ -93,14 +101,6 @@ public class GUI extends JFrame {
         grid.setElement(new Cell(new Conductor()));
         add(grid);
         grid.setVisible(true);
-
-        try {
-            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        } catch (ClassNotFoundException | InstantiationException |
-                IllegalAccessException | UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
-        }
-        SwingUtilities.updateComponentTreeUI(this);
 
         setVisible(true);
     }
