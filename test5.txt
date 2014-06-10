@@ -1,0 +1,202 @@
+30 30
+
+Head 2 3
+
+Tail 3 2
+
+Conductor 3 4
+
+Conductor 4 2
+
+Conductor 4 4
+
+Conductor 5 2
+
+Conductor 5 4
+
+Conductor 5 13
+
+Conductor 5 14
+
+Conductor 6 2
+
+Conductor 6 4
+
+Conductor 6 12
+
+Conductor 6 15
+
+Conductor 6 17
+
+Conductor 7 2
+
+Tail 7 4
+
+Conductor 7 11
+
+Conductor 7 14
+
+Conductor 7 15
+
+Conductor 7 16
+
+Conductor 7 18
+
+Head 8 3
+
+Conductor 8 11
+
+Conductor 8 13
+
+Conductor 8 15
+
+Conductor 8 16
+
+Conductor 8 18
+
+Tail 9 4
+
+Conductor 9 5
+
+Conductor 9 6
+
+Conductor 9 7
+
+Conductor 9 8
+
+Conductor 9 9
+
+Conductor 9 11
+
+Conductor 9 14
+
+Conductor 9 15
+
+Conductor 9 18
+
+Conductor 10 10
+
+Conductor 10 15
+
+Conductor 10 18
+
+Conductor 11 9
+
+Conductor 11 10
+
+Conductor 11 11
+
+Conductor 11 12
+
+Conductor 11 13
+
+Conductor 11 14
+
+Conductor 11 17
+
+Conductor 11 18
+
+Conductor 11 19
+
+Conductor 11 20
+
+Conductor 11 21
+
+Conductor 11 22
+
+Conductor 11 23
+
+Conductor 11 24
+
+Conductor 11 25
+
+Conductor 11 26
+
+Conductor 11 27
+
+Conductor 11 28
+
+Conductor 11 29
+
+Conductor 11 30
+
+Conductor 12 10
+
+Conductor 12 15
+
+Conductor 12 18
+
+Tail 13 4
+
+Conductor 13 5
+
+Conductor 13 6
+
+Conductor 13 7
+
+Conductor 13 8
+
+Conductor 13 9
+
+Conductor 13 11
+
+Conductor 13 14
+
+Conductor 13 15
+
+Conductor 13 18
+
+Head 14 3
+
+Conductor 14 11
+
+Conductor 14 13
+
+Conductor 14 15
+
+Conductor 14 16
+
+Conductor 14 18
+
+Conductor 15 2
+
+Tail 15 4
+
+Conductor 15 11
+
+Conductor 15 14
+
+Conductor 15 15
+
+Conductor 15 16
+
+Conductor 15 18
+
+Tail 16 2
+
+Conductor 16 4
+
+Conductor 16 12
+
+Conductor 16 15
+
+Conductor 16 17
+
+Head 17 2
+
+Conductor 17 4
+
+Conductor 17 13
+
+Conductor 17 14
+
+Conductor 18 2
+
+Conductor 18 4
+
+Conductor 19 2
+
+Conductor 19 4
+
+Conductor 20 3
+

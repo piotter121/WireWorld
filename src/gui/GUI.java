@@ -419,7 +419,7 @@ public class GUI extends JFrame {
     private void defaultSettingsClick() {
         isStoped = true;
         game.setNumberOfGenerations(1000);
-        game.setPopulation(new Population(30, 30));
+        game.setPopulation(new Population(60, 60));
         counterTextField.setText(String.valueOf(game.getNumberOfGenerations()));
         updateGrid();
     }

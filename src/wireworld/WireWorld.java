@@ -20,7 +20,7 @@ public class WireWorld {
      * Konstruktor tworzący automat z domyślnymi ustawieniami
      */
     public WireWorld() {
-        current = new Population(30, 30);
+        current = new Population(60, 60);
         next = null;
         n = 1000;
     }
