@@ -6,8 +6,9 @@
 package wireworld;
 
 /**
+ * Klasa automatu komórkowego WireWorld
  *
- * @author Piotrek
+ * @author Piotr Pyśk
  */
 public class WireWorld {
 
@@ -15,34 +16,66 @@ public class WireWorld {
     private Population next;
     private int n;
 
+    /**
+     * Konstruktor tworzący automat z domyślnymi ustawieniami
+     */
     public WireWorld() {
         current = new Population(60, 60);
         next = null;
         n = 1000;
     }
 
+    /**
+     * Konstruktor tworzący automat z zadaną populacją
+     *
+     * @param p populacja, która ma zostać użyta
+     */
     public WireWorld(Population p) {
         current = p;
         next = null;
         n = 1000;
     }
 
+    /**
+     * Metoda ustawiająca populację w automacie
+     *
+     * @param p populacja, która ma zostać ustawiona
+     */
     public void setPopulation(Population p) {
         current = p;
     }
 
+    /**
+     * Metoda ustawiająca liczbę generacji do przeprowadzenia
+     *
+     * @param n liczba generacji
+     */
     public void setNumberOfGenerations(int n) {
         this.n = n;
     }
 
+    /**
+     * Metoda zwracająca uchwyt do ustawionej populacji
+     *
+     * @return referencja do ustawionej w automacie populacji
+     */
     public Population getPopulation() {
         return current;
     }
 
+    /**
+     * Metoda zwracająca ilość pozostałych do przeprowawdzenia generacji w
+     * automacie
+     *
+     * @return liczba pozostałych generacji
+     */
     public int getNumberOfGenerations() {
         return n;
     }
 
+    /**
+     * Metoda ustawiająca automat w kolejnej generacji
+     */
     public void nextStep() {
         if (n > 0) {
             next = current.nextPopulation();
@@ -53,6 +86,9 @@ public class WireWorld {
         }
     }
 
+    /**
+     * Metoda uruchamiająca automat, który wykonuje pozostałą liczbę generacji
+     */
     public void start() {
         while (n > 0) {
             nextStep();

@@ -12,11 +12,18 @@ import wireworld.elements.cell.Tail;
 import wireworld.elements.cell.Cell;
 
 /**
+ * Fabryka elementów
  *
- * @author Piotrek
+ * @author Piotr Pyśk
  */
 public class ElementFactory {
 
+    /**
+     * Metoda budująca element
+     *
+     * @param element nazwa elementu do zbudowania
+     * @return element, który został zbudowany
+     */
     public static Element buildElement(String element) {
         switch (element) {
             case "Insulator":

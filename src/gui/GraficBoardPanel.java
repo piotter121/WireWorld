@@ -15,8 +15,9 @@ import wireworld.elements.Element;
 import wireworld.Population;
 
 /**
+ * Klasa obiektu wyświetlającego siatkę komórek
  *
- * @author Piotrek
+ * @author Piotr Pyśk
  */
 public class GraficBoardPanel extends JPanel
         implements MouseListener, MouseMotionListener {
@@ -29,6 +30,11 @@ public class GraficBoardPanel extends JPanel
     private final int panelWidth = 600;
     private boolean ifDrawGrid = true;
 
+    /**
+     * Konstruktor panelu wyświetlanjącego siatkę automatu
+     *
+     * @param p - Siatka, która ma zostać wyświetlona
+     */
     public GraficBoardPanel(Population p) {
         this.p = p;
         calculateSquareSize();
@@ -42,10 +48,18 @@ public class GraficBoardPanel extends JPanel
         squareSize = panelBiggerDemension / populationBiggerDemension;
     }
 
+    /**
+     *
+     * @return wysokość siatki
+     */
     public int getPanelHeight() {
         return panelHeight;
     }
 
+    /**
+     *
+     * @return szerkość panelu
+     */
     public int getPanelWidth() {
         return panelWidth;
     }
@@ -55,22 +69,22 @@ public class GraficBoardPanel extends JPanel
         calculateSquareSize();
     }
 
-    public Population getPopulation() {
-        return p;
-    }
-
+    /**
+     *
+     * @param element element, który po kliknięciu na siatkę ma zostać
+     * umieszczony
+     */
     public void setElement(Element element) {
         elem = element;
     }
 
-    public Element getElement() {
-        return elem;
-    }
-
-    public int getSquareSize() {
-        return squareSize;
-    }
-
+    /**
+     * Metoda ustawiająca flagę, która informuje, czy siatka międzykomórkowa ma
+     * być umieszczona, bądź nie
+     *
+     * @param b true - jeśli siatka między komórkami ma zostać umieszczona,
+     * false - jeśli ma jej nie być
+     */
     public void setIfDrawGrid(boolean b) {
         ifDrawGrid = b;
     }

@@ -9,8 +9,9 @@ import wireworld.Population;
 import wireworld.elements.cell.Conductor;
 
 /**
+ * Bramka NAND
  *
- * @author Piotrek
+ * @author Piotr Pyśk
  */
 public class NAND implements Element {
 

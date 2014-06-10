@@ -5,13 +5,12 @@
  */
 package wireworld.elements.cell;
 
-import wireworld.elements.cell.Head;
-import wireworld.elements.cell.State;
 import java.awt.Color;
 
 /**
+ * Przewodnik
  *
- * @author Piotrek
+ * @author Piotr Pyśk
  */
 public class Conductor implements State {
 

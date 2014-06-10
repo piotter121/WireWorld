@@ -9,8 +9,9 @@ import wireworld.Population;
 import wireworld.elements.cell.Conductor;
 
 /**
+ * Bramka And-Not
  *
- * @author Piotrek
+ * @author Piotr Pyśk
  */
 public class AndNot implements Element {
 

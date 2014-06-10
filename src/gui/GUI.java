@@ -24,13 +24,17 @@ import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import wireworld.*;
 import wireworld.elements.*;
 import wireworld.elements.cell.*;
 
 /**
+ * Klasa okna programu WireWorld
  *
- * @author Piotrek
+ * @author Piotr Pyśk
  */
 public class GUI extends JFrame {
 
@@ -70,6 +74,9 @@ public class GUI extends JFrame {
     private JSlider delaySlider;
     private JCheckBox checkGrid;
 
+    /**
+     * Konstruktor głównego okna programu
+     */
     public GUI() {
         isStoped = true;
         game = new WireWorld();
@@ -86,6 +93,14 @@ public class GUI extends JFrame {
         grid.setElement(new Cell(new Conductor()));
         add(grid);
         grid.setVisible(true);
+
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (ClassNotFoundException | InstantiationException |
+                IllegalAccessException | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+        SwingUtilities.updateComponentTreeUI(this);
 
         setVisible(true);
     }

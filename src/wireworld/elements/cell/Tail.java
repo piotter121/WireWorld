@@ -5,12 +5,12 @@
  */
 package wireworld.elements.cell;
 
-import wireworld.elements.cell.State;
 import java.awt.Color;
 
 /**
+ * Ogon elektronu
  *
- * @author Piotrek
+ * @author Piotr Pyśk
  */
 public class Tail implements State {
 

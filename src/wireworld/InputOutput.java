@@ -12,11 +12,19 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 /**
+ * Klasa "kontener" służąca do zapisu i odczytu z pliku
  *
- * @author Piotrek
+ * @author Piotr Pyśk
  */
 public class InputOutput {
 
+    /**
+     * Globalna metoda pomocnicza wczytująca z pliku populację, którą zwraca
+     *
+     * @param file obiekt z odnośnikiem do pliku, który ma zostać użyty do
+     * wczytania
+     * @return wczytana z pliku populacja
+     */
     public static Population readFromFile(File file) {
         Population p = null;
         Scanner reader = null;
@@ -40,9 +48,9 @@ public class InputOutput {
             }
 
             while (reader.hasNext()) {
-                line = reader.nextLine();
-                splited = line.split("\\s+");
                 try {
+                    line = reader.nextLine();
+                    splited = line.split("\\s+");
                     p.setElementOnBoard(Integer.parseInt(splited[1]) - 1,
                             Integer.parseInt(splited[2]) - 1,
                             ElementFactory.buildElement(splited[0]));
@@ -65,6 +73,13 @@ public class InputOutput {
         return p;
     }
 
+    /**
+     * Pomocnicza metoda globalna zapisująca do pliku podanego w argumencie
+     * populację, która też jest podana w argumencie
+     *
+     * @param p obiekt z populacją, która ma być zapisana
+     * @param file obiekt pliku, w którym ma zostać zapisana populacja
+     */
     public static void writeToFile(Population p, File file) {
         PrintWriter buffer = null;
         try {

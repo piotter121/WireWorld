@@ -9,8 +9,9 @@ import gui.GUI;
 import javax.swing.SwingUtilities;
 
 /**
+ * Klasa uruchamiająca program WireWorld
  *
- * @author Piotrek
+ * @author Piotr Pyśk
  */
 public class Program {
 

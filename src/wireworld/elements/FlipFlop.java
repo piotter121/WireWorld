@@ -9,8 +9,9 @@ import wireworld.Population;
 import wireworld.elements.cell.Conductor;
 
 /**
+ * Bramka Flip-Flop
  *
- * @author Piotrek
+ * @author Piotr Pyśk
  */
 public class FlipFlop implements Element {
 

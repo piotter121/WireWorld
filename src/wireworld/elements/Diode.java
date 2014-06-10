@@ -9,8 +9,9 @@ import wireworld.elements.cell.Conductor;
 import wireworld.Population;
 
 /**
+ * Dioda
  *
- * @author Piotrek
+ * @author Piotr Pyśk
  */
 public class Diode implements Element {
 

@@ -5,13 +5,12 @@
  */
 package wireworld.elements.cell;
 
-import wireworld.elements.cell.Tail;
-import wireworld.elements.cell.State;
 import java.awt.Color;
 
 /**
+ * Głowa elektronu
  *
- * @author Piotrek
+ * @author Piotr Pyśk
  */
 public class Head implements State {
 

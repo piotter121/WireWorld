@@ -9,8 +9,9 @@ import wireworld.Population;
 import wireworld.elements.cell.Conductor;
 
 /**
+ * Bramka OR
  *
- * @author Piotrek
+ * @author Piotr Pyśk
  */
 public class OR implements Element {
 

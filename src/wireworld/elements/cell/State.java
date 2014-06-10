@@ -8,12 +8,24 @@ package wireworld.elements.cell;
 import java.awt.Color;
 
 /**
+ * Stan komórki
  *
- * @author Piotrek
+ * @author Piotr Pyśk
  */
 public interface State {
 
+    /**
+     * Metoda zwracająca kolejny stan wg ilości głów elektronu dookoła niej
+     *
+     * @param heads ilość głów dookoła komórki
+     * @return kolejny stan
+     */
     public State nextState(int heads);
 
+    /**
+     * Metoda zwracająca kolor danego stanu
+     *
+     * @return kolor danego stanu
+     */
     public Color getColor();
 }

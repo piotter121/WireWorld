@@ -5,12 +5,12 @@
  */
 package wireworld.elements.cell;
 
-import wireworld.elements.cell.State;
 import java.awt.Color;
 
 /**
+ * Izolator
  *
- * @author Piotrek
+ * @author Piotr Pyśk
  */
 public class Insulator implements State {
 
