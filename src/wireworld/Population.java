@@ -138,20 +138,13 @@ public class Population {
         }
     }
 
+    /**
+     * Metoda ustawiająca dany element w populacji
+     * @param i współrzędna wysokości
+     * @param j współrzędna szerokości
+     * @param elem jaki element ma być wstawiony
+     */
     public void setElementOnBoard(int i, int j, Element elem) {
         elem.setElementOnBoard(i, j, this);
-    }
-
-    @Override
-    public String toString() {
-        String p = new String();
-        for (int i = 0; i < height; i++) {
-            p += "[ ";
-            for (int j = 0; j < width; j++) {
-                p += board[i][j].getState() + ", ";
-            }
-            p += " ]\n";
-        }
-        return p;
     }
 }

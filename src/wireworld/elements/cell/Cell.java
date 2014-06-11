@@ -71,11 +71,6 @@ public class Cell implements Element {
     }
 
     @Override
-    public String toString() {
-        return this.getState();
-    }
-
-    @Override
     public void setElementOnBoard(int i, int j, Population p) {
         p.setCellState(i, j, state);
     }
